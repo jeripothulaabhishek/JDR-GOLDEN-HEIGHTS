@@ -121,7 +121,7 @@ export default function AiConcierge({ onOpenLeadModal }: AiConciergeProps) {
   return (
     <>
       {/* Floating Button */}
-      <div className="fixed bottom-6 right-6 z-40">
+      <div className="fixed bottom-20 right-6 md:bottom-6 md:right-6 z-40">
         <motion.button
           onClick={() => setIsOpen(!isOpen)}
           whileHover={{ scale: 1.05 }}
@@ -149,7 +149,7 @@ export default function AiConcierge({ onOpenLeadModal }: AiConciergeProps) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 50, scale: 0.9 }}
             transition={{ type: 'spring', damping: 25, stiffness: 220 }}
-            className="fixed bottom-24 right-6 w-[340px] sm:w-[380px] h-[500px] rounded-2xl glass-panel border border-gold-500/20 shadow-2xl z-50 flex flex-col overflow-hidden text-left"
+            className="fixed bottom-36 right-6 md:bottom-24 md:right-6 w-[340px] sm:w-[380px] h-[500px] rounded-2xl glass-panel border border-gold-500/20 shadow-2xl z-50 flex flex-col overflow-hidden text-left"
           >
             {/* Chat Header */}
             <div className="p-4 bg-gradient-to-r from-gold-950/80 to-luxury-gray border-b border-gold-500/10 flex items-center justify-between">

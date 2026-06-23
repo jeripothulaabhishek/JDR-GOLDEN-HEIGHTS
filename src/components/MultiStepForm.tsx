@@ -97,6 +97,11 @@ export default function MultiStepForm({ isOpen, onClose, initialInterest }: Mult
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
+
+        // Construct and open WhatsApp template message
+        const waText = `New Lead - JDR Golden Heights\n\nName: ${formData.name}\nPhone: ${formData.phone}\nEmail: ${formData.email || 'N/A'}\nBudget/Phase: ${formData.budget || 'N/A'}\nProperty Interest: ${formData.message || 'General Enquiry'}\n\nSubmitted from Website`;
+        const waUrl = `https://wa.me/916262838353?text=${encodeURIComponent(waText)}`;
+        window.open(waUrl, '_blank');
       } else {
         alert(result.error || 'Failed to submit enquiry. Please try again.');
       }

@@ -2,7 +2,18 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ShieldAlert, MapPin, Landmark, TrendingUp, ChevronDown, CheckCircle } from 'lucide-react';
+import { 
+  ShieldAlert, 
+  MapPin, 
+  Landmark, 
+  TrendingUp, 
+  ChevronDown, 
+  CheckCircle, 
+  Clock, 
+  FileCheck, 
+  ArrowRight,
+  ShieldCheck
+} from 'lucide-react';
 
 interface AccordionItem {
   title: string;
@@ -12,7 +23,7 @@ interface AccordionItem {
 const investReasons: AccordionItem[] = [
   {
     title: 'Spiritual Hub & Mega Tourism Growth',
-    content: 'Following the grand reconstruction of the Yadadri Temple (often called Telangana\'s Tirupati) by the State Government, the region has witnessed a massive influx of tourists and pilgrims. This spiritual importance guarantees consistent infrastructure funding, cleanliness, and long-term population growth.',
+    content: 'Following the grand reconstruction of the Yadadri Temple (Telangana\'s Tirupati) by the State Government, the region has witnessed a massive influx of tourists and pilgrims. This spiritual importance guarantees consistent infrastructure funding, cleanliness, and long-term population growth.',
   },
   {
     title: 'High-Speed Connectivity & Highway Expansion',
@@ -24,6 +35,52 @@ const investReasons: AccordionItem[] = [
   },
 ];
 
+interface TimelineEvent {
+  stage: string;
+  title: string;
+  year: string;
+  status: 'Completed' | 'Current';
+  description: string;
+}
+
+const timeline: TimelineEvent[] = [
+  {
+    stage: 'Stage 1',
+    title: 'Land Acquisition & Clearing',
+    year: '2022',
+    status: 'Completed',
+    description: '100+ acres of prime high-elevation clear terrain acquired with clear single-owner title chain links.'
+  },
+  {
+    stage: 'Stage 2',
+    title: 'DTCP Layout Approval & RERA',
+    year: '2023',
+    status: 'Completed',
+    description: 'Received official DTCP layout approval (L.P. No. 134/2023/H) and registered under regulatory frameworks.'
+  },
+  {
+    stage: 'Stage 3',
+    title: 'Avenue Infrastructure & Paving',
+    year: '2024',
+    status: 'Completed',
+    description: 'Laying of 60ft main avenue and 40/33ft internal roads, alongside underground drainage and utility pipes.'
+  },
+  {
+    stage: 'Stage 4',
+    title: 'Civic Utilities & Entrance Arch',
+    year: '2025',
+    status: 'Completed',
+    description: 'Finished the grand entry arch, continuous CCTV security checkposts, overhead water tanks, and parks.'
+  },
+  {
+    stage: 'Stage 5',
+    title: 'Spot Registrations & Construct',
+    year: '2026',
+    status: 'Current',
+    description: 'Plot handovers, immediate registrations active. Buyers can begin construction of custom luxury villas.'
+  }
+];
+
 export default function About() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
@@ -33,12 +90,14 @@ export default function About() {
 
   return (
     <section id="about" className="py-24 bg-luxury-dark relative overflow-hidden">
-      {/* Decorative gold blur */}
+      {/* Decorative gold blurs */}
       <div className="absolute top-1/4 right-0 w-96 h-96 bg-gold-600/5 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 left-10 w-96 h-96 bg-gold-600/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+        
+        {/* Core Project Presentation grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start mb-24">
           
           {/* Left Column: Text & Content */}
           <div className="lg:col-span-7 space-y-8">
@@ -60,8 +119,27 @@ export default function About() {
               We offer clear-title, legally verified plotted developments with future-ready infrastructure like wide internal roads, underground drainage, and modern landscape planning. JDR Golden Heights is designed for discerning families who want a serene, safe environment alongside excellent appreciation potential.
             </p>
 
+            {/* Regulatory Approval Details */}
+            <div className="p-5 rounded-2xl bg-luxury-gray border border-gold-500/20 shadow-xl space-y-4">
+              <h4 className="text-xs font-bold uppercase tracking-widest text-gold-400 flex items-center">
+                <FileCheck className="h-4 w-4 mr-2" /> Verified Layout Approvals
+              </h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                <div className="p-3 bg-black/40 rounded-lg border border-white/5">
+                  <span className="text-gray-500 block mb-1">DTCP Layout LP No.</span>
+                  <span className="text-white font-mono font-bold">134/2023/H</span>
+                </div>
+                <div className="p-3 bg-black/40 rounded-lg border border-white/5">
+                  <span className="text-gray-500 block mb-1">TS RERA Registration Status</span>
+                  <span className="text-white font-mono font-bold flex items-center">
+                    <ShieldCheck className="h-3.5 w-3.5 mr-1 text-gold-400" /> Fully Compliant
+                  </span>
+                </div>
+              </div>
+            </div>
+
             {/* Why Invest Accordion */}
-            <div className="mt-10 space-y-4">
+            <div className="space-y-4 pt-4">
               <h3 className="text-lg font-serif font-semibold text-white mb-2">
                 Why Invest in the Yadadri Growth Corridor?
               </h3>
@@ -195,6 +273,47 @@ export default function About() {
           </div>
 
         </div>
+
+        {/* Chronological Project Timeline */}
+        <div className="border-t border-white/5 pt-16">
+          <div className="max-w-3xl mx-auto text-center mb-12">
+            <span className="text-xs font-bold tracking-widest text-gold-400 uppercase">Track Progress</span>
+            <h3 className="text-2xl sm:text-3xl font-serif font-bold text-white mt-2">Project Development Timeline</h3>
+          </div>
+          
+          <div className="relative border-l border-gold-500/20 max-w-4xl mx-auto pl-6 sm:pl-8 space-y-10">
+            {timeline.map((evt, idx) => (
+              <div key={idx} className="relative">
+                {/* Timeline node */}
+                <span className={`absolute -left-[37px] sm:-left-[45px] top-1 flex h-6 w-6 items-center justify-center rounded-full bg-luxury-black border-2 ${
+                  evt.status === 'Current' ? 'border-gold-400 shadow-gold-glow animate-pulse' : 'border-gold-700/50'
+                }`}>
+                  <span className={`h-2.5 w-2.5 rounded-full ${evt.status === 'Current' ? 'bg-gold-400' : 'bg-gold-700/60'}`} />
+                </span>
+
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
+                  {/* Left: Year & Stage */}
+                  <div className="md:col-span-3 flex flex-col text-left">
+                    <span className="text-xs font-bold tracking-wider text-gold-400 uppercase">{evt.stage}</span>
+                    <span className="text-lg font-bold font-serif text-white">{evt.year}</span>
+                    <span className={`inline-block mt-1 px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider w-max ${
+                      evt.status === 'Completed' ? 'bg-white/5 border border-white/10 text-gray-400' : 'bg-gold-500/10 border border-gold-500/30 text-gold-400'
+                    }`}>
+                      {evt.status}
+                    </span>
+                  </div>
+
+                  {/* Right: Details */}
+                  <div className="md:col-span-9 text-left space-y-1">
+                    <h4 className="text-sm sm:text-base font-serif font-bold text-white">{evt.title}</h4>
+                    <p className="text-xs sm:text-sm text-gray-400 leading-relaxed">{evt.description}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
       </div>
     </section>
   );

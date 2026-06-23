@@ -3,6 +3,19 @@
 import React, { useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Calendar, Download, PhoneCall, ChevronDown } from 'lucide-react';
+import dynamic from 'next/dynamic';
+
+// Dynamically import ThreeDShowcase with SSR disabled to optimize Lighthouse metrics
+const ThreeDShowcase = dynamic(() => import('./ThreeDShowcase'), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-[350px] flex items-center justify-center bg-luxury-gray/30 border border-gold-500/10 rounded-2xl backdrop-blur-md">
+      <div className="text-xs font-bold uppercase tracking-widest text-gold-400/60 animate-pulse">
+        Initializing 3D Visualizer...
+      </div>
+    </div>
+  ),
+});
 
 interface StatItemProps {
   value: number;
@@ -77,9 +90,9 @@ export default function Hero({ onOpenLeadModal, onOpenBrochureModal }: HeroProps
   // Parallax scroll effects
   const { scrollY } = useScroll();
   const yBg = useTransform(scrollY, [0, 500], [0, 150]);
-  const opacityText = useTransform(scrollY, [0, 300], [1, 0]);
+  const opacityText = useTransform(scrollY, [0, 400], [1, 0]);
 
-  // Gold Particle Canvas effect
+  // Ambient Particle Canvas effect in background
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -106,45 +119,26 @@ export default function Hero({ onOpenLeadModal, onOpenBrochureModal }: HeroProps
       opacity: number;
     }> = [];
 
-    // Create particles
-    const particleCount = 65;
+    const particleCount = 40; // Reduced for performance optimization
     for (let i = 0; i < particleCount; i++) {
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        radius: Math.random() * 2 + 0.5,
-        speedY: -Math.random() * 0.4 - 0.1, // Floating upwards slowly
-        speedX: (Math.random() - 0.5) * 0.25,
-        opacity: Math.random() * 0.5 + 0.2,
+        radius: Math.random() * 1.5 + 0.5,
+        speedY: -Math.random() * 0.3 - 0.05,
+        speedX: (Math.random() - 0.5) * 0.15,
+        opacity: Math.random() * 0.4 + 0.1,
       });
     }
 
     const animate = () => {
       ctx.clearRect(0, 0, width, height);
 
-      // Draw dark overlay grid pattern
-      ctx.strokeStyle = 'rgba(212, 175, 55, 0.03)';
-      ctx.lineWidth = 1;
-      const gridSize = 80;
-      for (let x = 0; x < width; x += gridSize) {
-        ctx.beginPath();
-        ctx.moveTo(x, 0);
-        ctx.lineTo(x, height);
-        ctx.stroke();
-      }
-      for (let y = 0; y < height; y += gridSize) {
-        ctx.beginPath();
-        ctx.moveTo(0, y);
-        ctx.lineTo(width, y);
-        ctx.stroke();
-      }
-
-      // Render gold particles
+      // Gold particles drawing
       particles.forEach((p) => {
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         
-        // Gradient for glow
         const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius * 3);
         grad.addColorStop(0, `rgba(212, 175, 55, ${p.opacity})`);
         grad.addColorStop(1, 'rgba(212, 175, 55, 0)');
@@ -152,11 +146,9 @@ export default function Hero({ onOpenLeadModal, onOpenBrochureModal }: HeroProps
         ctx.fillStyle = grad;
         ctx.fill();
 
-        // Update positions
         p.y += p.speedY;
         p.x += p.speedX;
 
-        // Reset if floats off-screen
         if (p.y < 0) {
           p.y = height;
           p.x = Math.random() * width;
@@ -195,91 +187,107 @@ export default function Hero({ onOpenLeadModal, onOpenBrochureModal }: HeroProps
     <section
       ref={containerRef}
       id="hero"
-      className="relative min-h-screen flex flex-col justify-center items-center overflow-hidden pt-20"
+      className="relative min-h-screen flex flex-col justify-center items-center overflow-hidden pt-24"
     >
-      {/* Background canvas for gold particles */}
+      {/* Background Gold Particles */}
       <motion.div style={{ y: yBg }} className="absolute inset-0 z-0 pointer-events-none">
         <canvas ref={canvasRef} className="w-full h-full block" />
-        <div className="absolute inset-0 bg-gradient-to-t from-luxury-black via-luxury-black/45 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-luxury-black via-luxury-black/40 to-transparent" />
       </motion.div>
 
-      {/* Main Hero Container */}
+      {/* Main Split Grid Container */}
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 w-full flex flex-col flex-grow justify-center py-12">
-        <motion.div
-          style={{ opacity: opacityText }}
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: 'easeOut' }}
-          className="text-center max-w-4xl mx-auto mb-16"
-        >
-          {/* Badge */}
-          <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-gold-950/40 border border-gold-400/20 backdrop-blur-md mb-8">
-            <span className="h-2 w-2 rounded-full bg-gold-400 animate-pulse" />
-            <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-gold-300">
-              Premium Residential Community
-            </span>
-          </div>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-16">
+          
+          {/* Left Column: Heading, Copy and CTAs */}
+          <motion.div
+            style={{ opacity: opacityText }}
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
+            className="lg:col-span-7 text-center lg:text-left space-y-6"
+          >
+            {/* Premium Badge */}
+            <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-gold-950/40 border border-gold-400/20 backdrop-blur-md">
+              <span className="h-2 w-2 rounded-full bg-gold-400 animate-pulse" />
+              <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-gold-300">
+                Premium Residential Community
+              </span>
+            </div>
 
-          {/* Headline */}
-          <h1 className="text-4xl sm:text-5xl md:text-7xl font-serif font-bold text-white leading-[1.1] mb-6 tracking-tight">
-            Own a Premium Future at <br />
-            <span className="text-gold-gradient block mt-2">JDR Golden Heights</span>
-          </h1>
+            {/* Main Bold Title */}
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold text-white leading-[1.1] tracking-tight">
+              Own a Premium Future at <br />
+              <span className="text-gold-gradient block mt-1">JDR Golden Heights</span>
+            </h1>
 
-          {/* Subheading */}
-          <p className="text-base sm:text-xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
-            Strategically Located Near Yadadri Temple • Premium Plotted Community • Limited Dussehra Pricing
-          </p>
+            {/* Subtitle */}
+            <p className="text-sm sm:text-base md:text-lg text-gray-300 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+              Strategically Located Near Yadadri Temple • Premium Plotted Community • Limited Dussehra Pricing
+            </p>
 
-          <p className="text-sm sm:text-base text-gray-400 mb-10 max-w-2xl mx-auto">
-            Experience modern living, secure investment opportunities, and future-ready infrastructure in Telangana&apos;s fastest growing corridor.
-          </p>
+            <p className="text-xs sm:text-sm text-gray-400 max-w-lg mx-auto lg:mx-0 leading-normal">
+              Experience modern living, secure investment opportunities, and future-ready infrastructure in Telangana&apos;s fastest growing temple tourism corridor.
+            </p>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mb-12">
-            {/* Primary CTA */}
-            <button
-              onClick={onOpenLeadModal}
-              className="w-full sm:w-auto flex items-center justify-center px-8 py-4 bg-gradient-to-r from-gold-600 via-gold-500 to-gold-400 hover:brightness-110 text-black font-bold uppercase tracking-widest text-xs rounded-lg transition-all duration-300 shadow-[0_5px_25px_rgba(212,175,55,0.35)] cursor-pointer group"
-            >
-              <Calendar className="h-4 w-4 mr-2 transition-transform group-hover:scale-110" />
-              Book Site Visit
-            </button>
+            {/* CTAs */}
+            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+              <button
+                onClick={onOpenLeadModal}
+                className="w-full sm:w-auto flex items-center justify-center px-8 py-4 bg-gradient-to-r from-gold-600 via-gold-500 to-gold-400 hover:brightness-110 text-black font-bold uppercase tracking-widest text-xs rounded-lg transition-all duration-300 shadow-[0_5px_25px_rgba(212,175,55,0.35)] cursor-pointer group"
+              >
+                <Calendar className="h-4 w-4 mr-2 transition-transform group-hover:scale-110" />
+                Book Site Visit
+              </button>
 
-            {/* Secondary CTA */}
-            <button
-              onClick={onOpenBrochureModal}
-              className="w-full sm:w-auto flex items-center justify-center px-8 py-4 bg-white/5 border border-gold-500/25 hover:border-gold-400 text-gold-400 font-bold uppercase tracking-widest text-xs rounded-lg transition-all duration-300 backdrop-blur-md cursor-pointer hover:shadow-gold-glow hover:bg-white/[0.08]"
-            >
-              <Download className="h-4 w-4 mr-2" />
-              Download Brochure
-            </button>
+              <button
+                onClick={onOpenBrochureModal}
+                className="w-full sm:w-auto flex items-center justify-center px-8 py-4 bg-white/5 border border-gold-500/25 hover:border-gold-400 text-gold-400 font-bold uppercase tracking-widest text-xs rounded-lg transition-all duration-300 backdrop-blur-md cursor-pointer hover:shadow-gold-glow hover:bg-white/[0.08]"
+              >
+                <Download className="h-4 w-4 mr-2" />
+                Download Brochure
+              </button>
 
-            {/* WhatsApp CTA Link */}
-            <a
-              href="https://wa.me/916262838353?text=Hi,%20I%20am%20interested%20in%20JDR%20Golden%20Heights."
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full sm:w-auto flex items-center justify-center px-8 py-4 bg-emerald-600/10 border border-emerald-500/30 hover:bg-emerald-600/25 text-emerald-400 hover:text-white font-bold uppercase tracking-widest text-xs rounded-lg transition-all duration-300"
-            >
-              <PhoneCall className="h-4 w-4 mr-2" />
-              WhatsApp Now
-            </a>
-          </div>
+              <a
+                href="https://wa.me/916262838353?text=Hi!%20I%20am%20interested%20in%20JDR%20Golden%20Heights.%20Please%20send%20me%20the%20pricing%20sheet%20and%20brochure."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto flex items-center justify-center px-8 py-4 bg-emerald-600/10 border border-emerald-500/30 hover:bg-emerald-600/25 text-emerald-400 hover:text-white font-bold uppercase tracking-widest text-xs rounded-lg transition-all duration-300"
+              >
+                <PhoneCall className="h-4 w-4 mr-2" />
+                WhatsApp Now
+              </a>
+            </div>
 
-          {/* Quick price tags */}
-          <div className="flex flex-wrap justify-center gap-4 text-xs font-semibold text-gray-400 tracking-wider">
-            <span className="px-3 py-1 bg-white/5 border border-white/5 rounded-full">Starting Price ₹18 Lakhs*</span>
-            <span className="px-3 py-1 bg-white/5 border border-white/5 rounded-full">DTCP Approved</span>
-            <span className="px-3 py-1 bg-white/5 border border-white/5 rounded-full">Future Growth Corridor</span>
-          </div>
-        </motion.div>
+            {/* Quick Price Tags */}
+            <div className="flex flex-wrap justify-center lg:justify-start gap-3 text-[10px] sm:text-xs font-semibold text-gray-400 tracking-wider pt-2">
+              <span className="px-3 py-1 bg-white/5 border border-white/5 rounded-full">Starting Price ₹18 Lakhs*</span>
+              <span className="px-3 py-1 bg-white/5 border border-white/5 rounded-full">DTCP Approved</span>
+              <span className="px-3 py-1 bg-white/5 border border-white/5 rounded-full">Future Growth Corridor</span>
+            </div>
+          </motion.div>
+
+          {/* Right Column: 3D visual showcase with subtle glow */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, delay: 0.2 }}
+            className="lg:col-span-5 w-full relative flex items-center justify-center"
+          >
+            {/* Visual Glass backdrop block */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-gold-500/5 to-white/5 rounded-3xl blur-2xl pointer-events-none" />
+            <div className="w-full rounded-2xl border border-white/10 bg-black/40 backdrop-blur-md p-4 relative shadow-2xl overflow-hidden aspect-[4/3] sm:aspect-square lg:aspect-auto">
+              <ThreeDShowcase />
+            </div>
+          </motion.div>
+
+        </div>
 
         {/* Live Counters */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.4 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
           className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 w-full max-w-5xl mx-auto"
         >
           <CounterStat value={500} suffix="+" label="Happy Investors" />

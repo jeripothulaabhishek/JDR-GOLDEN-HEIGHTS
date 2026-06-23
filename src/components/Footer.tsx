@@ -67,7 +67,6 @@ export default function Footer() {
                 { name: 'Master Layout Plan', href: '#layout' },
                 { name: 'Pricing Packages', href: '#pricing' },
                 { name: 'Interactive Location', href: '#location' },
-                { name: 'CRM Admin Panel', href: '/admin' },
               ].map((link) => (
                 <li key={link.name}>
                   <a

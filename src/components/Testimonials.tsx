@@ -73,7 +73,7 @@ export default function Testimonials() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Title */}
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
+        <div className="text-center max-w-3xl mx-auto mb-16 space-y-4 flex flex-col items-center">
           <span className="text-xs font-bold tracking-widest text-gold-400 uppercase">
             Investor Reviews
           </span>
@@ -83,6 +83,25 @@ export default function Testimonials() {
           <p className="text-sm sm:text-base text-gray-400">
             Read what our smart investors and site-owners say about the development quality, legal clearances, and capital value appreciation.
           </p>
+          
+          {/* Google Reviews Trust Badge */}
+          <div className="inline-flex items-center gap-3 px-4 py-2 mt-4 bg-luxury-gray/80 backdrop-blur-md border border-gold-500/20 rounded-full shadow-lg">
+            <div className="flex items-center gap-1">
+              <span className="text-gold-400 font-bold text-sm">4.9</span>
+              <div className="flex">
+                {[1, 2, 3, 4, 5].map((s) => (
+                  <Star key={s} className="h-3 w-3 text-gold-400 fill-gold-400" />
+                ))}
+              </div>
+            </div>
+            <div className="h-4 w-px bg-white/10" />
+            <div className="flex items-center gap-1.5">
+              <svg className="h-3.5 w-3.5 fill-gold-400" viewBox="0 0 24 24">
+                <path d="M12.24 10.285V13.4h6.887c-.275 1.565-1.88 4.604-6.887 4.604-4.33 0-7.859-3.579-7.859-8s3.53-8 7.859-8c2.46 0 4.105 1.025 5.047 1.926l2.427-2.334C17.955 2.192 15.34 1 12.24 1 5.92 1 1 5.92 1 12.24s4.92 11.24 11.24 11.24c6.6 0 11-4.606 11-11.24 0-.756-.08-1.333-.18-1.955H12.24z"/>
+              </svg>
+              <span className="text-xs text-gray-300 font-medium">148+ Verified Google Reviews</span>
+            </div>
+          </div>
         </div>
 
         {/* Carousel Slider Panel */}

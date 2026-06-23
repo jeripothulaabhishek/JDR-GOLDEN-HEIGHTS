@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { Playfair_Display, Outfit } from 'next/font/google';
+import Script from 'next/script';
 import './globals.css';
 
 const playfair = Playfair_Display({
@@ -129,6 +130,22 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <link rel="icon" href="/favicon.ico" />
+        
+        {/* Google Analytics 4 */}
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID || 'G-XXXXXXXXXX'}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${process.env.NEXT_PUBLIC_GA_ID || 'G-XXXXXXXXXX'}', {
+              page_path: window.location.pathname,
+            });
+          `}
+        </Script>
       </head>
       <body className="font-sans antialiased bg-luxury-black text-gray-100 min-h-screen flex flex-col">
         {children}

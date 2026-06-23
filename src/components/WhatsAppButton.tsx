@@ -6,7 +6,7 @@ import { MessageCircleCode } from 'lucide-react';
 
 export default function WhatsAppButton() {
   return (
-    <div className="fixed bottom-6 left-6 z-40">
+    <div className="fixed bottom-20 left-6 md:bottom-6 md:left-6 z-40">
       <motion.a
         href="https://wa.me/916262838353?text=Hi,%20I%20am%20interested%20in%20JDR%20Golden%20Heights."
         target="_blank"

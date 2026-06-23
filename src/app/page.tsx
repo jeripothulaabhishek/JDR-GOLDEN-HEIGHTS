@@ -23,6 +23,8 @@ import WhatsAppButton from '@/components/WhatsAppButton';
 import PopupManager from '@/components/PopupManager';
 import Footer from '@/components/Footer';
 import PricingSection from '@/components/PricingSection';
+import LocalSeoSections from '@/components/LocalSeoSections';
+import StickyMobileCta from '@/components/StickyMobileCta';
 
 // FAQs
 interface FaqItem {
@@ -93,6 +95,12 @@ export default function Home() {
 
       if (response.ok) {
         setIsContactSuccess(true);
+        
+        // Construct and open WhatsApp template message
+        const waText = `New Lead - JDR Golden Heights\n\nName: ${contactName}\nPhone: ${contactPhone}\nEmail: ${contactEmail || 'N/A'}\nBudget/Phase: ${contactPhase}\nProperty Interest: ${contactMsg || 'Page Footer Contact Form'}\n\nSubmitted from Website`;
+        const waUrl = `https://wa.me/916262838353?text=${encodeURIComponent(waText)}`;
+        window.open(waUrl, '_blank');
+
         // Reset form
         setContactName('');
         setContactPhone('');
@@ -121,6 +129,9 @@ export default function Home() {
 
       {/* About Project & Yadadri Corridor */}
       <About />
+
+      {/* Local SEO specifications tabbed details */}
+      <LocalSeoSections />
 
       {/* Project Highlights Grid */}
       <Highlights />
@@ -315,6 +326,7 @@ export default function Home() {
       <WhatsAppButton />
       <AiConcierge onOpenLeadModal={handleOpenLeadModal} />
       <PopupManager />
+      <StickyMobileCta onOpenLeadModal={handleOpenLeadModal} />
 
       {/* Multi-Step Site Booking Wizard Modal */}
       <MultiStepForm
