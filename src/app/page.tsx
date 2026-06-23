@@ -25,6 +25,8 @@ import Footer from '@/components/Footer';
 import PricingSection from '@/components/PricingSection';
 import LocalSeoSections from '@/components/LocalSeoSections';
 import StickyMobileCta from '@/components/StickyMobileCta';
+import ScrollStorytelling from '@/components/ScrollStorytelling';
+import StickyDesktopCta from '@/components/StickyDesktopCta';
 
 // FAQs
 interface FaqItem {
@@ -126,6 +128,9 @@ export default function Home() {
         onOpenLeadModal={() => handleOpenLeadModal('Hero CTA Booking')}
         onOpenBrochureModal={() => handleOpenLeadModal('Hero Brochure Download')}
       />
+
+      {/* Apple-style interactive 3D Scroll Storytelling */}
+      <ScrollStorytelling onOpenLeadModal={handleOpenLeadModal} />
 
       {/* About Project & Yadadri Corridor */}
       <About />
@@ -327,6 +332,7 @@ export default function Home() {
       <AiConcierge onOpenLeadModal={handleOpenLeadModal} />
       <PopupManager />
       <StickyMobileCta onOpenLeadModal={handleOpenLeadModal} />
+      <StickyDesktopCta onOpenLeadModal={handleOpenLeadModal} />
 
       {/* Multi-Step Site Booking Wizard Modal */}
       <MultiStepForm

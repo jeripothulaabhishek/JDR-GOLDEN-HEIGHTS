@@ -16,18 +16,33 @@
   --color-gold-900: #2d1d0c;
   --color-gold-950: #1a0f05;
 
-  --color-luxury-black: #060606;
-  --color-luxury-dark: #0a0a0a;
-  --color-luxury-gray: #121212;
-  --color-luxury-light-gray: #1c1c1c;
-  --color-luxury-border: rgba(212, 175, 55, 0.15);
+  --color-luxury-green-50: #f2f7f4;
+  --color-luxury-green-100: #e0edd9;
+  --color-luxury-green-200: #c1dbca;
+  --color-luxury-green-300: #92c0ab;
+  --color-luxury-green-400: #639f84;
+  --color-luxury-green-500: #3b8066;
+  --color-luxury-green-600: #2b6550;
+  --color-luxury-green-700: #225041;
+  --color-luxury-green-800: #15342a; /* Deep forest green */
+  --color-luxury-green-900: #0d211b; /* Dark forest green */
+  --color-luxury-green-950: #060f0c; /* Very deep dark forest green */
 
-  --shadow-gold-glow: 0 0 20px rgba(212, 175, 55, 0.2);
-  --shadow-gold-glow-hover: 0 0 35px rgba(212, 175, 55, 0.45);
+  --color-lime-gold: #baf033; /* Vibrant luxury chartreuse */
+  --color-accent-lime: #baf033;
+
+  --color-luxury-black: #030705; /* Black-green */
+  --color-luxury-dark: #070e0b;
+  --color-luxury-gray: #0b1511;
+  --color-luxury-light-gray: #13241d;
+  --color-luxury-border: rgba(186, 240, 51, 0.15);
+
+  --shadow-gold-glow: 0 0 20px rgba(186, 240, 51, 0.2);
+  --shadow-gold-glow-hover: 0 0 35px rgba(186, 240, 51, 0.45);
 }
 
 :root {
-  --background: #060606;
+  --background: #030705;
   --foreground: #f3f4f6;
 }
 
@@ -93,37 +108,37 @@ body {
 
 /* Glassmorphism base classes */
 .glass-panel {
-  background: rgba(18, 18, 18, 0.65);
+  background: rgba(11, 21, 17, 0.7);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(212, 175, 55, 0.12);
+  border: 1px solid rgba(186, 240, 51, 0.12);
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
 }
 
 .glass-panel-hover {
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glass-panel-hover:hover {
-  border-color: rgba(212, 175, 55, 0.4);
-  box-shadow: 0 10px 40px 0 rgba(212, 175, 55, 0.1);
+  border-color: rgba(186, 240, 51, 0.4);
+  box-shadow: 0 10px 40px 0 rgba(186, 240, 51, 0.1);
   transform: translateY(-2px);
 }
 
 .glass-navbar {
-  background: rgba(6, 6, 6, 0.75);
+  background: rgba(3, 7, 5, 0.75);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+  border-bottom: 1px solid rgba(186, 240, 51, 0.1);
 }
 
 .gold-border-glow {
-  box-shadow: 0 0 15px rgba(212, 175, 55, 0.1);
+  box-shadow: 0 0 15px rgba(186, 240, 51, 0.1);
   transition: box-shadow 0.3s ease;
 }
 
 .gold-border-glow:hover {
-  box-shadow: 0 0 25px rgba(212, 175, 55, 0.3);
+  box-shadow: 0 0 25px rgba(186, 240, 51, 0.3);
 }
 
 /* Confetti overlay styles if needed */
